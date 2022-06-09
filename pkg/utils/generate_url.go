@@ -5,7 +5,11 @@ import (
 	"web-standalone-template/pkg/configs"
 )
 
-func GetMySQLUrl() string {
-	return fmt.Sprintf("%s:%s@tcp(%s)/%s",
-		configs.MySQLUser, configs.MySQLPassword, configs.MySQLHost, configs.MySQLDatabase)
+func GetMySQLUrl(db string) string {
+	prefix := fmt.Sprintf("%s:%s@tcp(%s)/", configs.MySQLUser, configs.MySQLPassword, configs.MySQLHost)
+	switch db {
+	case "db1":
+		return prefix + configs.MySQLDatabase
+	}
+	return ""
 }

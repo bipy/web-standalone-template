@@ -3,28 +3,12 @@ package queries
 import (
 	"github.com/jmoiron/sqlx"
 	"math/rand"
-	schedules "web-standalone-template/app/schdules"
-	"web-standalone-template/pkg/configs"
 	"web-standalone-template/pkg/repository"
-	"web-standalone-template/platform"
-)
-
-type DataSetQuery struct {
-	*sqlx.DB
-}
-
-var (
-	DataSetDB *DataSetQuery
 )
 
 const (
 	getEQuery = `SELECT e FROM my_table WHERE id IN (?)`
 )
-
-func init() {
-	DataSetDB = &DataSetQuery{DB: platform.GetNewMySQLConn(configs.URL)}
-	schedules.StartHelloSchedule()
-}
 
 func (db *DataSetQuery) GetE(n int) ([]string, error) {
 	var rt []string
