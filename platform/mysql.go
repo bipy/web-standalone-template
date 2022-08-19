@@ -1,10 +1,20 @@
 package platform
 
 import (
+	"context"
+	"entgo.io/ent/dialect"
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/jmoiron/sqlx"
+	"web-standalone-template/ent"
 )
 
-func GetNewMySQLConn(url string) *sqlx.DB {
-	return sqlx.MustConnect("mysql", url)
+func GetMySQLClient(url string) *ent.Client {
+	client, err := ent.Open(dialect.MySQL, url)
+	if err != nil {
+		panic(err.Error())
+	}
+	err = client.Schema.Create(context.Background())
+	if err != nil {
+		panic(err.Error())
+	}
+	return client
 }

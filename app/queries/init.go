@@ -1,13 +1,13 @@
 package queries
 
 import (
-	"github.com/jmoiron/sqlx"
+	"web-standalone-template/ent"
 	"web-standalone-template/pkg/utils"
 	"web-standalone-template/platform"
 )
 
 type DataSetQuery struct {
-	*sqlx.DB
+	*ent.Client
 }
 
 var (
@@ -15,5 +15,5 @@ var (
 )
 
 func init() {
-	DataSetDB = &DataSetQuery{DB: platform.GetNewMySQLConn(utils.GetMySQLUrl("db1"))}
+	DataSetDB = &DataSetQuery{platform.GetMySQLClient(utils.GetMySQLUrl("db1"))}
 }
