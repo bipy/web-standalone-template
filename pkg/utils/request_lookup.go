@@ -16,8 +16,10 @@ func RequestLookUp(c echo.Context, key string, fields ...string) (string, error)
 		case "param":
 			s = c.Param(key)
 		case "cookie":
-			cookie, _ := c.Cookie(key)
-			s = cookie.Value
+			cookie, err := c.Cookie(key)
+			if err == nil {
+				s = cookie.Value
+			}
 		case "header":
 			s = c.Request().Header.Get(key)
 		default:
