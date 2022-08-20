@@ -14,6 +14,6 @@ func (db *DataSetQuery) GetV(n int) ([]string, error) {
 	}
 	return db.MyTable.Query().
 		Where(mytable.IDIn(idx...)).
-		Select(mytable.FieldValue).
+		Select(mytable.FieldName).
 		Strings(context.Background())
 }

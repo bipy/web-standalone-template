@@ -8,8 +8,9 @@ import (
 func GetMySQLUrl(db string) string {
 	prefix := fmt.Sprintf("%s:%s@tcp(%s)/", configs.MySQLUser, configs.MySQLPassword, configs.MySQLHost)
 	switch db {
-	case "db1":
+	case "read":
+		return prefix + "read"
+	default:
 		return prefix + configs.MySQLDatabase
 	}
-	return ""
 }

@@ -3,6 +3,7 @@ package schema
 import (
 	"entgo.io/ent"
 	"entgo.io/ent/schema/field"
+	"time"
 )
 
 // MyTable holds the schema definition for the MyTable entity.
@@ -17,8 +18,11 @@ func (MyTable) Fields() []ent.Field {
 			Unique().
 			Positive().
 			Immutable(),
-		field.Text("value").
+		field.Text("name").
 			NotEmpty(),
+		field.Time("create_at").
+			Default(time.Now).
+			Immutable(),
 	}
 }
 

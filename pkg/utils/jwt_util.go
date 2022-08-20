@@ -1,35 +1,37 @@
 package utils
 
 import (
+	"errors"
 	"github.com/golang-jwt/jwt/v4"
-	"strconv"
 	"web-standalone-template/pkg/configs"
 )
 
-func Verify(tokenString string) (int, error) {
-	token, err := jwt.Parse(tokenString, keyFunc)
+func Verify(signedToken string) (int, error) {
+	token, err := jwt.Parse(signedToken, keyFunc)
 	if err != nil {
 		return 0, err
 	}
-	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
-		idStr, ok := claims["userID"].(string)
-		if !ok {
-			return 0, jwt.ErrInvalidKeyType
-		}
-		id, err := strconv.Atoi(idStr)
-		return id, err
+
+	claims, ok := token.Claims.(jwt.MapClaims)
+	if !ok || !token.Valid {
+		return 0, errors.New("invalid token")
 	}
-	return 0, jwt.ErrTokenUnverifiable
+
+	id, ok := claims["userID"].(float64)
+	if !ok {
+		return 0, errors.New("invalid userID")
+	}
+
+	return int(id), nil
 }
 
-func GenerateToken(userID int) (t string, err error) {
+func GenerateToken(userID int) (string, error) {
 	claims := jwt.MapClaims{}
-	claims["userID"] = strconv.Itoa(userID)
+	claims["userID"] = userID
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 
-	t, err = token.SignedString([]byte(configs.JWTSecretKey))
-	return
+	return token.SignedString([]byte(configs.JWTSecretKey))
 }
 
 func keyFunc(token *jwt.Token) (any, error) {

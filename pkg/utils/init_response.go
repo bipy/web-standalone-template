@@ -3,7 +3,7 @@ package utils
 type Response struct {
 	Code int    `json:"code"`
 	Msg  string `json:"msg"`
-	Resp any    `json:"resp"`
+	Resp any    `json:"resp,omitempty"`
 }
 
 func SuccessResponse(resp any) Response {
@@ -14,7 +14,7 @@ func SuccessResponse(resp any) Response {
 	}
 }
 
-func FailResponse(msg string, resp ...any) Response {
+func FailResponse(msg string, resp any) Response {
 	return Response{
 		Code: 1,
 		Msg:  msg,
@@ -22,7 +22,7 @@ func FailResponse(msg string, resp ...any) Response {
 	}
 }
 
-func DIYResponse(code int, msg string, resp ...any) Response {
+func DIYResponse(code int, msg string, resp any) Response {
 	return Response{
 		Code: code,
 		Msg:  msg,
