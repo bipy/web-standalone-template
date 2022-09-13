@@ -12,7 +12,6 @@ func main() {
 	app.Use(middleware.Logger())
 	app.Use(middleware.Recover())
 	app.Use(middleware.CORS())
-	app.Use(middleware.JWT())
 
 	routes.PublicRoutes(app)
 	routes.GeneralRoutes(app)
