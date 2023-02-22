@@ -1,13 +1,13 @@
 module web-standalone-template
 
-go 1.18
+go 1.20
 
 require (
 	entgo.io/ent v0.11.2
 	github.com/go-redis/redis/v8 v8.11.5
 	github.com/go-sql-driver/mysql v1.6.0
 	github.com/golang-jwt/jwt/v4 v4.5.0
-	github.com/labstack/echo/v4 v4.10.0
+	github.com/labstack/echo/v4 v4.10.2
 	github.com/stretchr/testify v1.8.1
 	golang.org/x/crypto v0.6.0
 )
